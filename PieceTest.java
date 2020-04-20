@@ -14,7 +14,6 @@ public class PieceTest extends TestCase {
 	// pyramid and s pieces in instance variables
 	// that can be used in tests.
 	
-	
 	// every last rotation that is the same as the 
 	//first initial piece is indexed as 5. 
 	private Piece pyr1, pyr2, pyr3, pyr4, pyr5;

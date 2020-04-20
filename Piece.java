@@ -112,7 +112,7 @@ public class Piece {
 		// YOUR CODE HERE
 		TPoint[] t= new TPoint[this.body.length];
 		for(int i=0; i<body.length; i++){
-			t[i]=new TPoint(height-1- body[i].y, body[i].x);
+			t[i]=new TPoint(height-body[i].y-1, body[i].x);
 		}
 		return new Piece(t); // YOUR CODE HERE
 	}

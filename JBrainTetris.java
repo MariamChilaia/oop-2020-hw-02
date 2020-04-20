@@ -1,13 +1,17 @@
+import java.awt.Dimension;
+
 import javax.swing.*;
 
 
 
 public class JBrainTetris extends JTetris {
-
+	private JLabel adversaryLabel;
 	private Brain.Move m=null;
 	private Brain brain;
 	private int currCount;
 	private JCheckBox brainMove;
+	private JSlider adversary;
+	private JPanel little;
 	
 	//constructor.
 	JBrainTetris(int pixels) {
@@ -20,10 +24,22 @@ public class JBrainTetris extends JTetris {
 	@Override
 	public JComponent createControlPanel() {
 		JComponent panel = super.createControlPanel();
+		little = new JPanel(); 
+		little.add(new JLabel("Adversary:")); 
+		adversary = new JSlider(0, 100, 0); // min, max, current
+		adversary.setPreferredSize(new Dimension(100,15)); 
+		little.add(adversary);
+
+		//little.add(adversaryLabel);
+		 adversaryLabel = new JLabel("ok");
+
+		little.add(adversaryLabel);
+		panel.add(little);
 		panel.add(new JLabel("Brain:"));
 		//hand out code.
 		brainMove = new JCheckBox("Brain active");
 		panel.add(brainMove);
+		
 		return panel;
 	}
 	
@@ -53,7 +69,31 @@ public class JBrainTetris extends JTetris {
 		
 		super.tick(verb);
 	}
-	
+	@Override
+	public Piece pickNextPiece(){
+		int r= random.nextInt(99);
+		if(r< adversary.getValue()){
+			adversaryLabel.setText("ok");
+			Piece next = super.pickNextPiece();
+			
+			double badScore = 0;   //because nextm.score is a double.
+			for(Piece p: pieces){
+				board.undo();
+				Brain.Move nextm = brain.bestMove(board, p, HEIGHT, null);
+				if(nextm!=null){
+					if(nextm.score> badScore){
+						next = p;
+						badScore = nextm.score;
+					}
+				}
+			}
+			return next;
+		}
+		adversaryLabel.setText("*ok*");
+		Piece res;
+		res = super.pickNextPiece();
+		return res;
+	}
 	//how the main looks with exceptions.
 	public static void main(String[] args) {
 		try {

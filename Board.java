@@ -79,6 +79,7 @@ public class Board	{
 	 for debugging.
 	*/
 	public void sanityCheck() {
+		
 		int gridMH=0; //max height of grid.
 		if (DEBUG) {
 			int[] gridHeight = new int[width]; //create a width length array
@@ -99,6 +100,7 @@ public class Board	{
 			}
 
 			assert(mHeight==gridMH);
+			
 			assert(Arrays.equals(heights,gridHeight ));
 			assert(Arrays.equals(widths,gridWidth));
 			// YOUR CODE HERE
